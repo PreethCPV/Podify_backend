@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "podify-m8fni5loy-preethcpvs-projects.vercel.app",
     credentials: true, // or whatever your frontend URL is
   })
 );
