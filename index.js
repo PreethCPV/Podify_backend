@@ -10,25 +10,30 @@ import { UserRouter } from "./routes/user_rt.js";
 
 const app = express();
 app.use(express.json());
-app.use(
-  cors({
-    origin: "podify-m8fni5loy-preethcpvs-projects.vercel.app",
-    credentials: true, // or whatever your frontend URL is
-  })
-);
+app.use(cors());
 app.use(cookieParser());
 app.use("/auth", UserRouter);
 
+// Define a route for the root path
+app.get("/", (req, res) => {
+  res.send("Welcome to the home page!");
+});
+
 async function dbconnect() {
-  await mongoose.connect(
-    "mongodb+srv://preethamvenkatram:Preeth0987123@podify1.t5nxief.mongodb.net/",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  );
+  mongoose
+    .connect(
+      "mongodb://preethamvenkatram:Preeth0987123@podify1.t5nxief.mongodb.net/?retryWrites=true&w=majority&appName=podify1"
+    )
+    .then(() => console.log("Database Connected"))
+    .catch((error) => {
+      console.log("error", error);
+    });
   console.log("db connection successful");
 }
+
+app.get("/", (req, res) => {
+  res.send("Welcome to the home page!");
+});
 app.listen(process.env.PORT, () => {
   console.log("Server is running in ", process.env.PORT);
   dbconnect();
